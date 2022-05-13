@@ -15,8 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group( function () {
+    Route::post('update-user-info' , [UserManagementController::class , 'updateUserInfo']);
+    Route::post('update-user-password' , [UserManagementController::class , 'updateUserPassword'] );
 });
 Route::post('sign-up' , [UserManagementController::class , 'signUp']);
 Route::post('sign-in', [UserManagementController::class , 'signIn']);

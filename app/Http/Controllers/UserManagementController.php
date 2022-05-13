@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 class UserManagementController extends Controller
 {
     public function signUp ( Request $request){
+
         $user = User::create([
        'first_name' => $request->first_name,
         'last_name' => $request->last_name,
@@ -34,4 +35,30 @@ class UserManagementController extends Controller
                 }else
                 return response()->json(['error' => 'user not found']);
     }
+
+    public function updateUserInfo(Request $request){
+        $user = User::find($request->id);
+        if(isset($user)){
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            $user->role = $request->role;
+            $user-> mobile_number = $request->mobile_number;
+            $user->save();
+            return response()->json($user);        }else
+        return response()->json(['error'=> "User not found "]);
+
+    }
+
+   public function updateUserPassword(Request $request){
+    $user = User::find($request->id);
+    if(isset($user)){
+        $user->password = encrypt( $request->password);
+        $user->save();
+        return response()->json($user);
+        }
+        else
+    return response()->json(['error'=> "User not found "]);
+   }
+
 }
