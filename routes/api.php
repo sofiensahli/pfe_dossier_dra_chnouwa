@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\UserManagementController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -13,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+*/    Route::post('insert_consultation' , [ConsultationController::class , 'insertConsultation'] );
+
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::post('update-user-info' , [UserManagementController::class , 'updateUserInfo']);
