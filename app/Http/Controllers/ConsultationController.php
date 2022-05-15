@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+
 use App\Http\Controllers\Controller;
 use App\Models\Consultation;
 use App\Models\PieceJointe as ModelsPieceJointe;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use PieceJointe;
 
 class ConsultationController extends Controller
 {
@@ -24,7 +19,10 @@ class ConsultationController extends Controller
         'numero_comission'
 */
     public function insertConsultation ( Request $request){
-        $consultation = new Consultation() ;
+        if(isset($request->id))
+            $consultation =  Consultation::find($request->id);
+        else
+            $consultation = new Consultation() ;
         $consultation->titre = $request->titre ;
         $consultation->date_publication = $request->date_publication;
         $consultation->date_ouverture = $request->date_ouverture;
@@ -44,5 +42,8 @@ class ConsultationController extends Controller
         return response()->json( Consultation::with(['peiceJointes' , 'fournisseurs'] ) ->find($consultation->id));
     }
 
+    public function getConsultations ( ){
+        return response()->json( Consultation::with(['peiceJointes' , 'fournisseurs'] ) ->get());
+    }
 
 }

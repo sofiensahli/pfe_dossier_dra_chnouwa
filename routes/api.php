@@ -14,12 +14,16 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/    Route::post('insert_consultation' , [ConsultationController::class , 'insertConsultation'] );
-
-
+*/
 Route::middleware('auth:sanctum')->group( function () {
     Route::post('update-user-info' , [UserManagementController::class , 'updateUserInfo']);
     Route::post('update-user-password' , [UserManagementController::class , 'updateUserPassword'] );
 });
+
+Route::middleware(['auth:sanctum'])->group(function(){
+    Route::post('insert_consultation' , [ConsultationController::class , 'insertConsultation'] );
+    Route::get('get-consultations', [ConsultationController::class , 'getConsultations']);
+});
+
 Route::post('sign-up' , [UserManagementController::class , 'signUp']);
 Route::post('sign-in', [UserManagementController::class , 'signIn']);
